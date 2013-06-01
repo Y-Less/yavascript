@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8;">
+		<title>yavascript.org ECMA development system</title>
+		<style type="text/css">
+			a img
+			{
+				border: 0;
+			}
+			
+			pre
+			{
+				border: 1px solid black;
+				padding: 5px;
+				background-color: #CCC;
+			}
+			
+			h1
+			{
+				display: none;
+			}
+			
+			#logo
+			{
+				width: 25%;
+			}
+			
+			#header ul li
+			{
+				display: inline;
+			}
+			
+			#header img
+			{
+				display: inline;
+				float: left;
+			}
+			
+			#header a
+			{
+				font-size: 150%;
+			}
+			
+			#download a, #SVN a
+			{
+				font-size: 150%;
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			<img src="YSlogo.png" alt="yavascript.org" id="logo">
+			<ul>
+				<li><a href="#a_what">What is it?</a></li>
+				<li><a href="#a_how">How do I use it?</a></li>
+				<li><a href="#a_con">Constructs</a></li>
+				<li><a href="#a_ex">Examples</a></li>
+				<li><a href="#a_origin">Project origin</a></li>
+				<li><a href="#a_down">Download</a></li>
+				<li><a href="#a_svn">SVN</a></li>
+			</ul>
+		</div>
+		<h1>yavascript.org</h1>
+		<div id="what_is">
+			<a name="a_what"></a>
+			<h2>What is is?</h2>
+			<p>yavascript (YS) is a development system designed to ease the writing and testing of JavaScript, and other ECMAScript based languages, through the provision of simple and streamlined tools.  Using it makes it easier to write modular, reusable and dynamic code, introducing constructs for C-like coding.</p>
+			<p>Code developed in this manner is instantly testable, all major browsers* support YS through the use of an additional javascript library, and once development of a script is complete a compiler is used to compact all relevant code.  Conditional compilation (though '#if' and other constructs) can be used to ensure code can be written once generically and deployed in multiple situations with minimal overhead for generic coding.  yavascript was designed with minimum impact in mind, it is an extension to the language, not a replacement or paradigm alteration.</p>
+			<p class="note">* YS is theoretically compatible with any flavour of ECMAScript, but has only been ported to web based systems for the time being.</p>
+			<p>During development occsaions may arise where you want to write a piece of code to be used in different ways, or have different values, in different projects or you use the same piece of code over and over again.  In other languages these are simple to do, but in JavaScript require either rewriting whole files or using excessive variables and control structures.</p>
+			<p>Since this project was first released, Google have released their compeating "closure" compiler for Javascript.  At this point this code is basically abandonware, but is still available for posterity.  The downloads are almost exactly as they were when I first submitted this at university, the only difference is that the writeup has been updated to .docx, and has had page and section numbers added.</p>
+		</div>
+		<div id="how_use">
+			<a name="a_how"></a>
+			<h2>How do I use it?</h2>
+			<h3>development</h3>
+			<p>Regular JS development involves writing and testing code, often updating instantly in your browser, and frequently with a minification stage on completion.  It is exactly the same with YS, any valid JS code is valid YS code, it can be used with any existing library/framework you happen to use and code can be developed entirely without using the additional extensions like any regular code.</p>
+			<p>You can extend your code using the constructs explained below.  During development these are interpreted by the JS library and turned into real JS code, with all required files together and with only the required chunks of code existing to be parsed.  This system can be a little slow, but it is designed for development, requiring no additional steps over regular development.</p>
+			<h3>Deployment</h3>
+			<p>Once your code is complete the (optimising) compiler takes it and minifies only the parts you want, omitting code written for flaxibility but not required in this project.  For example, you could use prototype's 'Hash' object without the rest of the library, despite the fact that it's all there during development and you know nothing about separating it out.  The compiler will output a single .js file with all the code you wrote and used, negating the need to load multiple files with excess code you're not even using.</p>
+			<p class="note">Note that prototype is not optimised for YS, but the above descriptions are for examples.</p>
+			<h3>Compiling</h3>
+			<pre>
+yavascript -f "input.ys" -o "output.js" -t web
+			</pre>
+		</div>
+		<div id="Constructs">
+			<a name="a_con"></a>
+			<h2>Constructs</h2>
+			<p>The syntax should be familiar to C coders, but for everyone else there are a few simple constructs:</p>
+			<h3>#include</h3>
+			<pre>
+#include 'other_file.ys'
+			</pre>
+			<p>Loads another file for use in the current code.  Uses XMLHttpRequest (or equivalent) so requires a server to load from.  Imports all the code from the other file into the current location in the file, making it all instantly available.</p>
+			<h3>#define</h3>
+			<pre>
+#define NAME 'value'
+			</pre>
+			<p>Defines a constant for use in code, instances of the name are replaced textually by the value, allowing code to be defined as well as constants, unlike variables.</p>
+			<h3>#if</h3>
+			<pre>
+#if 10 &lt; SOME_CONSTANT
+	// Regular code
+#endif
+			</pre>
+			<p>Includes the code within the block into the final javascript only if the constant condition is true.  The condition may use values defined through #define.</p>
+			<h3>#endif</h3>
+			<p>Ends a block of code dependant on a '#if'.</p>
+			<h3>#else</h3>
+			<pre>
+#if 10 &lt; SOME_CONSTANT
+	// Regular code
+#else
+	// Other code
+#endif
+			</pre>
+			<p>Includes the code in the #else/#endif block only if the #if condition was false.</p>
+			<h3>elseif</h3>
+			<p>There is no #elseif, instead use #else and #if</p>
+			<pre>
+#if 10 &lt; SOME_CONSTANT
+	// Regular code
+#else
+	#if 2 &lt; SOME_CONSTANT
+		// Other code
+	#else
+		// Final code
+	#endif
+#endif
+			</pre>
+			<h3>#ifdef</h3>
+			<pre>
+#define SOME_CONSTANT (10) // Defined
+#ifdef SOME_CONSTANT
+	// Regular code
+#endif
+			</pre>
+			<p>Used in the same way as #if, but is true when the given constant (from #define) is defined.</p>
+			<h3>#ifndef</h3>
+			<pre>
+//#define SOME_CONSTANT (10) // Not defined
+#ifndef SOME_CONSTANT
+	// Regular code
+#endif
+			</pre>
+			<p>Used in the same way as #if, but is true when the given constant (from #define) is NOT defined.</p>
+		</div>
+		<div id="examples">
+			<a name="a_ex"></a>
+			<h2>Examples</h2>
+			<ol>
+				<li>
+					<h3>Original</h3>
+					<pre class="code">
+#include 'prototype.js'
+
+#define LOOP_SIZE (10)
+
+#define LOOP for (var i = 0; i != LOOP_SIZE; ++i)
+
+LOOP
+{
+	alert('Value: ' + i);
+}
+					</pre>
+					<h3>Compiled</h3>
+					<pre class="code">
+/* prototype code goes here */for(var i=0;i!=10;++i)alert('Value: '+i)
+					</pre>
+				</li>
+				<li>
+					<h3>Original</h3>
+					<pre class="code">
+#define VALUE (10)
+
+#if VALUE &lt; 10
+	alert("small");
+#else
+	#if VALUE &lt; 20
+		alert("medium");
+	#else
+		alert("large");
+	#endif
+#endif
+					</pre>
+					<h3>Compiled</h3>
+					<pre class="code">
+alert('medium')
+					</pre>
+				</li>
+				<li>
+					<h3>Original</h3>
+					<pre class="code">
+#define USE_JQUERY (true)
+
+#ifdef USE_JQUERY
+	#include 'jquery.js'
+#else
+	#include 'prototype.js'
+#endif
+
+alert("$: \"" + $ + "\"");
+					</pre>
+					<h3>Compiled</h3>
+					<pre class="code">
+/* jQuery code goes here */alert('$: "'+$+'"')
+					</pre>
+				</li>
+				<li>
+					<h3>Larger Example</h3>
+					<p><a href="Examples/colorpick.html">THIS</a> page demonstrates a small web app built using some yavascript libraries (the full source of which can be browsed <a href="Examples/colorpick.html">here</a>).  Note that this takes a while to load due to the time required to parse and compile the Yavascript code to Javascript.</p>
+					<p>A precompiled version is available <a href="Examples/colorpick_min.html">HERE</a></p>
+				</li>
+			</ol>
+		</div>
+		<div id="origin">
+			<a name="a_origin"></a>
+			<h2>Project origin</h2>
+			<p>This project was originally developed for my third year project in university, but I felt it was sufficiently useful to be released for anyone to use.  Technically the uni own the IP but it's released under the <a href="/web/20110928074214/http://www.mozilla.org/MPL/MPL-1.1.html">MPL</a> so it's here for you to use as you see fit.</p>
+			<p>This is the code as I gave it in, there's still a lot of work to be done, so this should be considered 0.1beta.  Also, the compiler is only built for windows so far.</p>
+		</div>
+		<div id="download">
+			<a name="a_down"></a>
+			<h2>Download</h2>
+			<a href="yavascript.rar">Development package with example code</a>
+			<a href="source.rar">Full source code</a>
+			<a href="writeup.rar">Submitted writeup</a>
+		</div>
+		<div id="SVN">
+			<a name="a_svn"></a>
+			<h2>SVN</h2>
+			<a href="https://dedi.y-less.com/svn/yavascript/">SVN repository</a>
+			<a href="https://dedi.y-less.com/trac/yavascript/">trac project</a>
+		</div>
+		<div id="footer">
+			<a href="http://validator.w3.org/check?uri=referer"><img src="valid-html401.png" alt="Valid HTML 4.01 Strict"></a>
+			<a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="vcss.gif" alt="Valid CSS!"></a>
+		</div>
+	</body>
+</html>

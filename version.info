@@ -1,0 +1,3 @@
+#define MAJORVERSION 0
+#define MINORVERSION 7
+#define BUILDNUMBER 2526

@@ -1,0 +1,217 @@
+/*
+=======================================
+
+  Put your own css declarations here.
+
+=======================================
+*/
+
+#pick_image
+{
+	width:	256px;
+	height:	256px;
+	/*width:	100%;
+	height:	100%;*/
+	float:	left;
+}
+
+#pick, #grad
+{
+	border:		3px inset gray;
+	margin:		1px;
+	position:	relative;
+	float:		left;
+}
+
+#pick
+{
+	/* width:	256px; */
+	/* height:	256px; */
+}
+
+#grad
+{
+	width:	40px;
+	height:	256px;
+	color:	black;
+}
+
+#grad img
+{
+	width:	40px;
+	float:	left;
+	clear:	left;
+}
+
+/*
+=======================================
+			   Important
+
+These are the unimportant declarations
+- altering these will adjust the visual
+appearance of your windows, but not the
+functionality.
+
+=======================================
+*/
+
+/* Style of the main content area */
+.ysi_window_inner
+{
+	background-color:	#C0C0C0;
+	overflow:			hidden !important;
+}
+
+/* Initial window size */
+.ysi_window_outer_min
+{
+	width:	318px;
+	height:	256px;
+}
+
+/* Appearance of the outside of the window while minimised (surrounds the title bar) */
+.ysi_window_outer_min .ysi_window_container
+{
+	border:	3px outset #C0C0C0;
+}
+
+/* Removes outer border stylings while maximised */
+.ysi_window_outer_max .ysi_window_container
+{
+	border:	0;
+}
+
+/* Appearance of the outside of the window while maximised (misses the title bar) */
+.ysi_window_outer_max .ysi_window_inner
+{
+	border:		3px outset #C0C0C0;
+	border-top:	0;
+	height:		100%;
+}
+
+/* Removes outer border stylings while minimised */
+.ysi_window_outer_min .ysi_window_inner
+{
+	border:	0;
+}
+
+/* Size and appearance of the window title */
+.ysi_window_bar
+{
+	background-color:	blue;
+	height:				20px;
+}
+
+/* Appearance of the title bar text */
+.ysi_window_bar span
+{
+	color:			white;
+	font-weight:	bold;
+}
+
+/* Position of the icons in the title bar relative to the top-right of the bar */
+.ysi_window_icons
+{
+	right:	2px;
+	top:	2px;
+}
+
+/*
+=======================================
+			   Important
+
+These are the important declarations -
+altering these will affect the
+functionality of your windows and may
+cause major problems, hence they are
+uncommented.
+
+=======================================
+*/
+
+*
+{
+	border:		0;
+	margin:		0;
+	padding:	0;
+}
+
+.ysi_window_inner, .ysi_window_content, .ysi_window_container
+{
+	z-index:			1;
+	-opera-box-sizing:	border-box;
+	-moz-box-sizing:	border-box;
+	box-sizing:			border-box;
+	-ms-box-sizing:		border-box;
+	-webkit-box-sizing:	border-box;
+	-khtml-box-sizing:	border-box;
+}
+
+.ysi_window_outer
+{
+	float:	left;
+}
+
+.ysi_window_container
+{
+	height:	100%;
+}
+
+.ysi_window_bar
+{
+	width:		100%;
+	z-index:	2;
+	position:	absolute;
+	top:		0;
+	left:		0;
+}
+
+.ysi_window_bar span
+{
+	cursor:	default;
+}
+
+.ysi_window_icons
+{
+	position:	absolute;
+	/*float:		left;
+	display:	block;*/
+}
+
+.ysi_window_icons img
+{
+	float:		left;
+	display:	inline;
+}
+
+* html .ysi_window_icons img
+{
+	margin: 0 -3px;
+} 
+
+.ysi_window_content
+{
+	position:	relative;
+	top:		0;
+	width:		100%;
+	height:		100%;
+}
+
+.ysi_window_inner
+{
+	width:		100%;
+	height:		100%;
+	overflow:	auto;
+}
+
+.ysi_window_fit
+{
+	width:		100%;
+	height:		100%;
+	position:	relative;
+}
+
+* html .ysi_window_outer
+{
+	overflow:	auto;
+}
